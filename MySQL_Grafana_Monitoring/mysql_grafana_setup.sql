@@ -203,11 +203,11 @@ DELIMITER ;
 -- Make sure the event scheduler is enabled in your my.cnf or runtime
 SET GLOBAL event_scheduler = 1;
 
--- Schedule metrics collection every 10 minutes
+-- Schedule metrics collection every 5 minutes
 SET sql_log_bin = 0;
 DROP EVENT IF EXISTS collect_stats;
 CREATE EVENT collect_stats
-  ON SCHEDULE EVERY 10 MINUTE
+  ON SCHEDULE EVERY 5 MINUTE
   DO CALL collect_stats();
 
 -- Schedule DB size stats collection daily
@@ -223,13 +223,13 @@ SET sql_log_bin = 1;
 **********************************************/
 
 -- Create dedicated monitoring user
-CREATE USER 'grafana_monitoring'@'YOUR_USER'
-  IDENTIFIED BY 'YOUR_PASSWORD';
+CREATE USER 'grafana_monitoring'@'localhost'
+  IDENTIFIED BY 'StrongPassword123';
 
 -- Grant minimal required privileges
-GRANT SELECT, INSERT, DELETE ON grafana_monitoring.* TO 'grafana_monitoring'@'YOUR_USER';
-GRANT SELECT ON performance_schema.* TO 'grafana_monitoring'@'YOUR_USER';
-GRANT PROCESS ON *.* TO 'grafana_monitoring'@'YOUR_USER';
+GRANT SELECT, INSERT, DELETE ON grafana_monitoring.* TO 'grafana_monitoring'@'localhost';
+GRANT SELECT ON performance_schema.* TO 'grafana_monitoring'@'localhost';
+GRANT PROCESS ON *.* TO 'grafana_monitoring'@'localhost';
 
 -- Apply changes
 FLUSH PRIVILEGES;
