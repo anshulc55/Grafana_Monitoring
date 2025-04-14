@@ -223,13 +223,13 @@ SET sql_log_bin = 1;
 **********************************************/
 
 -- Create dedicated monitoring user
-CREATE USER 'grafana_monitoring'@'localhost'
-  IDENTIFIED BY 'StrongPassword123';
+CREATE USER 'grafana_monitoring'@'YOUR_USER'
+  IDENTIFIED BY 'Your_Password';
 
 -- Grant minimal required privileges
-GRANT SELECT, INSERT, DELETE ON grafana_monitoring.* TO 'grafana_monitoring'@'localhost';
-GRANT SELECT ON performance_schema.* TO 'grafana_monitoring'@'localhost';
-GRANT PROCESS ON *.* TO 'grafana_monitoring'@'localhost';
+GRANT SELECT, INSERT, DELETE ON grafana_monitoring.* TO 'grafana_monitoring'@'YOUR_USER';
+GRANT SELECT ON performance_schema.* TO 'grafana_monitoring'@'YOUR_USER';
+GRANT PROCESS ON *.* TO 'grafana_monitoring'@'YOUR_USER';
 
 -- Apply changes
 FLUSH PRIVILEGES;
