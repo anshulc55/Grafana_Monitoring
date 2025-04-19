@@ -186,8 +186,8 @@ ORDER BY timest ASC
 * Panel Type : Bar Chart
 **********************************************/
 SELECT timest, 
-       REPLACE(variable_name, 'SIZEDB.', '') AS db_name,
-       variable_value / (1024 * 1024 * 1024) AS size_gb
+       REPLACE(variable_name, 'SIZEDB.', '') AS DB_NAME,
+       variable_value / (1024 * 1024 * 1024) AS size_GB
 FROM grafana_monitoring.status
 WHERE variable_name LIKE 'SIZEDB.%'
 

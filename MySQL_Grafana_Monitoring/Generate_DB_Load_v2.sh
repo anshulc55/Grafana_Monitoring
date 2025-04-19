@@ -3,7 +3,7 @@
 # Configuration
 USER="loaduser"
 PASS="StrongPassword"
-DB="grafana_monitor"
+DB="grafana_monitoring"
 
 # Helper: Execute SQL
 exec_sql() {
