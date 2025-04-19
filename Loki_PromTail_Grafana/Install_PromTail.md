@@ -1,3 +1,4 @@
+
 # 📦 Promtail Installation & Configuration on Ubuntu (Systemd Service)
 
 Promtail is an agent which ships the contents of local logs to a Loki instance or Grafana Cloud. It is usually deployed to every machine that has applications needed to be monitored.
@@ -31,9 +32,13 @@ chmod +x promtail-linux-amd64
 
 # Rename for convenience
 mv promtail-linux-amd64 promtail
+```
+
+---
 
 ## 📥 Step 2: Configure PromTail
 
+```bash
 # Download Configuration File
 cd /opt/promtail
 wget https://raw.githubusercontent.com/grafana/loki/main/clients/cmd/promtail/promtail-local-config.yaml
@@ -41,13 +46,21 @@ mv promtail-local-config.yaml promtail-config.yaml
 
 # Create a Position File (Used by Promtail to track where it left off)
 touch /opt/promtail/positions.yaml
+```
 
-Update this Locaton in promtail-config.yaml
+Update the file path in the `promtail-config.yaml` accordingly.
+
+---
 
 ## 🛠️ Step 3: Create a Systemd Service File for Promtail
-sudo vi /etc/systemd/system/promtail.service
 
-# Fil Content
+```bash
+sudo vi /etc/systemd/system/promtail.service
+```
+
+### File Content:
+
+```ini
 [Unit]
 Description=Promtail Service
 After=network.target
@@ -59,9 +72,13 @@ Restart=on-failure
 
 [Install]
 WantedBy=multi-user.target
+```
 
+---
 
 ## ✅ Step 5: Enable and Start the Promtail Service
+
+```bash
 # Reload systemd to recognize the new service
 sudo systemctl daemon-reload
 
@@ -73,7 +90,13 @@ sudo systemctl start promtail
 
 # Check status
 sudo systemctl status promtail
+```
 
+---
 
 ## 🧪 Step 6: Verify Logs Are Being Sent to Loki
 
+```bash
+curl http://localhost:3100/ready
+curl http://localhost:3100/metrics
+```
