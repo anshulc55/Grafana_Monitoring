@@ -1,3 +1,4 @@
+
 # 🚀 Install and Configure Grafana Loki as a Systemd Service on Ubuntu
 
 > This guide walks you through installing Grafana Loki on Ubuntu, configuring it, and setting it up as a systemd service so it runs automatically on boot.
@@ -32,18 +33,24 @@ mv loki-linux-amd64 loki
 
 # Make it executable
 chmod a+x loki
+```
 
+---
 
 ## 📥 Step 2: Configure Loki
 
+```bash
 # Download Configuration File
 cd /opt/loki
 wget https://raw.githubusercontent.com/grafana/loki/main/cmd/loki/loki-local-config.yaml
 mv loki-local-config.yaml loki-config.yaml
+```
 
+---
 
 ## 📥 Step 3: Create Systemd Service
 
+```bash
 # Create user for loki (optional but recommended)
 sudo useradd --system --home /opt/loki --shell /bin/false loki
 
@@ -52,8 +59,11 @@ sudo chown -R loki:loki /opt/loki
 
 # Create a Systemd Service for Loki
 sudo vi /etc/systemd/system/loki.service
+```
 
-# File Conent -
+### File Content:
+
+```ini
 [Unit]
 Description=Grafana Loki Log Aggregator
 After=network.target
@@ -68,10 +78,13 @@ LimitNOFILE=65536
 
 [Install]
 WantedBy=multi-user.target
+```
 
+---
 
 ## 📥 Step 5: Start and Enable the Loki Service
 
+```bash
 # Reload systemd to recognize the service
 sudo systemctl daemon-reload
 
@@ -81,18 +94,21 @@ sudo systemctl start loki
 
 # Check the status
 sudo systemctl status loki
+```
 
+---
 
 ## 📥 Step 6: Verify Loki is Running
 
+```bash
 curl http://localhost:3100/ready
 curl http://localhost:3100/metrics
+```
+
+---
 
 ## Optional: Add UFW Rule (if firewall is enabled)
+
+```bash
 sudo ufw allow 3100/tcp
-
-
-
-
-
-
+```
